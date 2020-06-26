@@ -1,0 +1,21 @@
+{
+  "name": "weathernodejs",
+  "version": "1.0.0",
+  "description": "Obtain weather data of a given location, store and display",
+  "main": "index.js",
+  "scripts": {
+    "main": "env-cmd -f ./config/main.env node src/index.js",
+    "dev": "env-cmd -f ./config/dev.env node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "env-cmd": "^10.1.0",
+    "mqtt": "^4.1.0",
+    "node-cron": "^2.0.3",
+    "postman-request": "^2.88.1-postman.23"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
