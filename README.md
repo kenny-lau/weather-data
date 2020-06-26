@@ -1,6 +1,6 @@
-#weather_data
+# weather_data
 
-##Javascript: Weather Data
+## Javascript: Weather Data
 
 A Javascript project to retrieve data from public API, maintain local data file for specific amount of days. Publish data to MQTT broker.
 
