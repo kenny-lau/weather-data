@@ -9,7 +9,7 @@ const geocode = (address, callback) => {
         } else {
             const packet = JSON.parse(body)
             if (packet.features.length === 0) {
-                allback('Unable to get geo location incomplete.', undefined);
+                callback('Unable to get geo location incomplete.', undefined);
             } else {
                 callback(undefined, {
                     longitude: packet.features[0].center[0],
