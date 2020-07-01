@@ -5,27 +5,29 @@ const cron = require('node-cron')
 
 // Set tracking location
 const address = process.env.LOCATION
+
+let longitude, latitude
+geocode(address).then((code) => {
+    longitude = code.longitude
+    latitude = code.latitude
+}).catch((error) => {
+    console.log('geocode error: ', error)
+    process.exit(1)
+})
 console.log(`Start tracking: ${address}`)
 
 // Wake up every 15 minutes to retrieve data
 cron.schedule('*/15 * * * *', () => {
-    geocode(address, (error, { longitude, latitude, location }) => {
-        if (error) {
-            return console.log(error)
-        }
-        // Obtain actual weather data
-        forcast(longitude, latitude, (error, forcastData) => {
-            if (error) {
-                return console.log(error)
-            }
-            // Get current time to setup local data file name
-            const now = new Date()
-            const fileName = `./${process.env.LOGFILE_DIR}/${new Date().toISOString().substr(0, 10)}.json`
-            console.log(now.toISOString())
-            publishObject(forcastData)
-            addEntry(fileName, forcastData)
-            cleanUpData(now)
-        })
+    forcast(longitude, latitude).then((forcastData) => {
+        // Get current time to setup local data file name
+        const now = new Date()
+        const fileName = `./${process.env.LOGFILE_DIR}/${new Date().toISOString().substr(0, 10)}.json`
+        console.log(now.toISOString())
+        publishObject(forcastData)
+        addEntry(fileName, forcastData)
+        cleanUpData(now)
+    }).catch((error) => {
+        console.log(error)
     })
 })
 
